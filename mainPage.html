@@ -34,27 +34,49 @@ body{
  </div>
  <div id="second">
  <h1 style="text-align: center;">Task List</h1> 
- <table>
+ <table id="Table" style="text-align: center;">
  	<th style="padding-left: 20px">No</th>
  	<th style="padding-left: 100px">Date</th>
  	<th style="padding-left: 100px">Edit</th>
  	<th style="padding-left: 100px">Delete</th>
  	<th style="padding-left: 100px">Details</th>
+ 	<tr style="text-align: center;">
+ 		
+ 	</tr>
  </table>	
  </div>
 </body>
 <script type="text/javascript">
+    var arr=[];
+    var id=0;
 	function getInformations()
 	{
 		var details=document.getElementById("details").value;
 		var date   = document.getElementById("date").value; 
-		alert(details);
 		if(details=="" ||date=="" )
 		{
 			alert("NO field Should be empty");
 		}
 		else
 		{
+
+        var info={dat:date,detail:details};
+        arr.push(info);
+        
+        for(var i=0;i<=id;i++)
+        {
+        	var table= document.getElementById("Table");
+        	var row=   table.insertRow(i+1);
+            var cell1= row.insertCell(0);
+            var cell2= row.insertCell(1);
+            var cell3= row.insertCell(2);
+            var cell4= row.insertCell(3);
+            var cell5= row.insertCell(4);
+            cell1.innerHTML='<td>'+details+'</td>';
+            cell2.innerHTML='<td>'+date+'</td>';
+
+        }
+        id+=1;
 
 		}
 	}
