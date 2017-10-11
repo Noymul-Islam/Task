@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<title>Task</title>
+<head>
+<style type="text/css">
+body{
+	background-color:white;
+}
+#first{
+	width: 50%;
+	height: 50%;
+	background-color: chocolate;
+	margin-left: 300px;
+}
+#second{
+     background-color: grey;
+     width: 50%;
+     height: 100vh;
+     margin-left: 300px;
+}
+</style>
+</head>
+<body>
+ <div id="first">
+   <h1 style="text-align: center;">Task Details</h1>
+   
+   <input  type="text"  id="details" placeholder="Description" style="margin-left: 150px;margin-top: 20px">
+   <br>
+   <br>
+   <input type="date"   id="date" style="margin-left: 150px;margin-top: 40px">
+   <br>
+   <br>
+   <button id="submit" onclick="getInformations()" style="margin-left: 150px;margin-top: 60px">Submit</button> 
+ </div>
+ <div id="second">
+ <h1 style="text-align: center;">Task List</h1> 
+ <table>
+ 	<th style="padding-left: 20px">No</th>
+ 	<th style="padding-left: 100px">Date</th>
+ 	<th style="padding-left: 100px">Edit</th>
+ 	<th style="padding-left: 100px">Delete</th>
+ 	<th style="padding-left: 100px">Details</th>
+ </table>	
+ </div>
+</body>
+<script type="text/javascript">
+	function getInformations()
+	{
+		var details=document.getElementById("details").value;
+		var date   = document.getElementById("date").value; 
+		alert(details);
+		if(details=="" ||date=="" )
+		{
+			alert("NO field Should be empty");
+		}
+		else
+		{
+
+		}
+	}
+</script> 
+</html>
