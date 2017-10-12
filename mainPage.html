@@ -22,7 +22,7 @@ body{
 </head>
 <body>
  <div id="first">
-   <h1 style="text-align: center;">Task Details</h1>
+   <h1 style="text-align: center;">Add Task</h1>
    
    <input  type="text"  id="details" placeholder="Description" style="margin-left: 150px;margin-top: 20px">
    <br>
@@ -34,25 +34,70 @@ body{
  </div>
  <div id="second">
  <h1 style="text-align: center;">Task List</h1> 
- <table id="Table" style="text-align: center;">
- 	<th style="padding-left: 20px">No</th>
- 	<th style="padding-left: 100px">Date</th>
- 	<th style="padding-left: 100px">Edit</th>
- 	<th style="padding-left: 100px">Delete</th>
- 	<th style="padding-left: 100px">Details</th>
- 	<tr style="text-align: center;">
- 		
- 	</tr>
+ <table id="Table" style="width:100%;">
+ 	<tr>
+		<th>No</th>
+		<th>Date</th>
+		<th>Edit</th>
+		<th>Delete</th>
+		<th>Details</th>
+	</tr>
+	<tbody id="tableBody">
+		
+	</tbody>
  </table>	
  </div>
 </body>
 <script type="text/javascript">
-    var arr=[];
-    var id=0;
+    var lists = [];
+    var id;
+	try
+	{
+	 id =sessionStorage.getItem('id');
+	 if(sessionStorage.array) {
+	    
+		lists = JSON.parse(sessionStorage.getItem('array'))
+	}else{
+		lists = [];
+	}
+	// if(id==null)
+	  //  id=0;
+	 //if(lists.length)
+	   // lists=[];
+	 for (var i=0;i<lists.length;i++)
+	 { 
+	        var table= document.getElementById("Table");
+			var body = document.getElementById("tableBody");
+        	var row=   body.insertRow();
+            var cell1= row.insertCell(0);
+            var cell2= row.insertCell(1);
+            var cell3= row.insertCell(2);
+            var cell4= row.insertCell(3);
+            var cell5= row.insertCell(4);
+            cell1.innerHTML="<td>"+""+(lists.length+1)+""+"</td>";
+			cell1.style = "text-align:center";
+            cell2.innerHTML="<td>"+lists[i].dat+"</td>";
+			cell3.innerHTML='<button>Edit</button>';
+            cell4.innerHTML='<button>Delete</button>';
+			cell5.innerHTML='<button>View</button>';
+			cell2.style = "text-align:center";
+			cell3.style = "text-align:center";
+			cell4.style = "text-align:center";
+			cell5.style = "text-align:center";
+	 
+	 }
+	 
+	}
+	catch(err)
+	{
+	 
+	}
+	  
 	function getInformations()
 	{
 		var details=document.getElementById("details").value;
 		var date   = document.getElementById("date").value; 
+
 		if(details=="" ||date=="" )
 		{
 			alert("NO field Should be empty");
@@ -60,23 +105,36 @@ body{
 		else
 		{
 
-        var info={dat:date,detail:details};
-        arr.push(info);
+            var info={dat:date,detail:details};
+            lists.push(info);
+            
+            
         
-        for(var i=0;i<=id;i++)
-        {
         	var table= document.getElementById("Table");
-        	var row=   table.insertRow(i+1);
+			var body = document.getElementById("tableBody");
+        	var row=   body.insertRow();
             var cell1= row.insertCell(0);
             var cell2= row.insertCell(1);
             var cell3= row.insertCell(2);
             var cell4= row.insertCell(3);
             var cell5= row.insertCell(4);
-            cell1.innerHTML='<td>'+details+'</td>';
-            cell2.innerHTML='<td>'+date+'</td>';
-
-        }
-        id+=1;
+            cell1.innerHTML="<td>"+""+(lists.length+1)+""+"</td>";
+			cell1.style = "text-align:center";
+            cell2.innerHTML="<td>"+date+"</td>";
+			cell3.innerHTML='<button>Edit</button>';
+            cell4.innerHTML='<button>Delete</button>';
+			cell5.innerHTML='<button>View</button>';
+			cell2.style = "text-align:center";
+			cell3.style = "text-align:center";
+			cell4.style = "text-align:center";
+			cell5.style = "text-align:center";
+        //id++;
+		document.getElementById("details").value="";
+		document.getElementById("date").value="";
+		sessionStorage.removeItem('array');
+		sessionStorage.setItem('array',JSON.stringify(lists));
+		//sessionStorage.removeItem('id');
+		//sessionStorage.setItem('id',id);
 
 		}
 	}
