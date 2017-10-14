@@ -57,7 +57,7 @@
 	/*border: 1px solid black;*/
 	height: 300px;
 	width:auto;
-	background-image: url("cell.jpg");
+	background-image: url("logo6.jpg");
 	background-repeat: repeat-x;
 
 }
@@ -69,11 +69,11 @@
 }
 .text1{
 	font-size: 150%;
-	color:grey;
+	color:white;
 }
 .text2{
 	font-size: 100%;
-	color:grey;
+	color:white;
 }
 #btn1{
 	height: 25px;
