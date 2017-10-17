@@ -92,7 +92,7 @@ function editArray()
 
 	}
 }
-
+function mainFunction(){
 var insertobject= new insertInArray();
     insertobject.insertIntoFirst(10);
     insertobject.insertIntoPosition(20,1);
@@ -100,14 +100,17 @@ var insertobject= new insertInArray();
     insertobject.insertIntoLast(50);
     currentSituation();
     console.log("After....Insertion");
-var deleteObject= new deleteFromArray();
+
+ var editObject= new editArray();
+     editObject.editFirstElement(30);
+     editObject.editLastElement(40);
+     editObject.editIndexElement(2,60);
+     currentSituation();
+     console.log("After....edition");
+ var deleteObject= new deleteFromArray();
     deleteObject.deleteFromFirst();
     deleteObject.deleteFromLast();
     deleteObject.deleteFromPosition(0);
     currentSituation();
-    console.log("After....deletion");
- var editArray= new editArray();
-     editArray.editFirstElement(30);
-     editArray.editLastElement(40);
-     editArray.editIndexElement(2,60);
-     currentSituation();
+}
+mainFunction();

@@ -1,6 +1,6 @@
-function outerFuntion()
+/*function outerFuntion()
 {
-	var value;
+	//var value;
 	this.getInfo= function()
 	{
 		return this.value;
@@ -16,4 +16,21 @@ function outerFuntion()
 var obj= new outerFuntion();
  obj.setInfo(10);
  console.log(obj.getInfo());
+
+*/
+
+var person= function(){
+
+ var pri= function()
+ {
+ 	console.log("Hello world");
+ }
+
+ return pri;
+
+}
+
+var obj= new person();
+
+    obj();
 

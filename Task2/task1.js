@@ -1,23 +1,37 @@
-function temp(person)
+/*function temp(person)
+{
+	  this.string="";
+
+	for(var key in person)	
+	{
+
+		this.string =this.string+ " "+person[key];
+	}	
+    this.bindObjectIntoString=function()
+    {
+    	return this.string;
+    }
+
+}*/
+function objectInformation(person)
 {
 	var string="";
-
-
-	for(var key in person)
+    for(var key in person)	
 	{
-		this.string=this.string+" "+person[key];
-		//console.log(person[key]);
+
+		string =string+ " "+person[key];
 	}
-	return this.string;
+	return string;
 	
-
-
 }
+
 function mainFunction()
 {
 	var person={firstName:"Noymul",middleName:"Islam",lastName:"Chowdhury", nickName:"Shorot",age:24,area:"West Dhanmondi",city:"Dhaka",country:"Bangladesh"};
-	var obj= new temp(person); 
-	console.log(obj.string);
+	var string=objectInformation(person);
+        console.log(string); 
+	//var obj= objectInformation(person);
+	//console.log(obj.bindObjectIntoString());
 }
 
 mainFunction();
