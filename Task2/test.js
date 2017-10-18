@@ -25,9 +25,16 @@ var person= function(){
  {
  	console.log("Hello world");
  }
+ var post= function()
+ {
+ 	console.log("Hello universe");
+ }
 
- return pri;
-
+ return 
+ {
+ 	pri;
+ } 
+ 
 }
 
 var obj= new person();

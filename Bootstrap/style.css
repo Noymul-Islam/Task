@@ -1,0 +1,35 @@
+#logo1{
+	width:80px;
+
+}
+ul{
+	list-style-type:none;
+	font-size: 150%;
+	padding-top: 08px;
+}
+
+.img1{
+	width: 100%;
+}
+.img2{
+	height: 200px;
+	width: 50%;
+
+}
+.item{
+	height: 500px;
+	width:auto;
+}
+.text-alignment{
+	margin-left: 25px;
+}
+.img3{
+	height: 300px;
+}
+.paragraph-design{
+	margin-top:10px; 
+}
+.upperBorder{
+	border: top 1px solid grey;
+	position: fixed;
+}
