@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To Do List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	<input type="text" id="text" placeholder="Add Task...">
+	<br>
+	<button onclick="addTask()">Add Task</button>
+    <br>
+    <button type="button" onclick="onAllList()" class="btn btn-link">All</button>
+    <button type="button" onclick="showCompletedList()" class="btn btn-link">Completed</button>
+    <button type="button" onclick="showActiveList()" class="btn btn-link">Active</button>
+    <br>
+    <ul id="UL">
+    	
+    </ul>
+    </div>
+</body>
+
+
+
+<script type="text/javascript">
+var list=[];
+var show=1;
+
+function taskObject(string,status)
+{
+	this.task=string;
+	this.check=status;
+
+}
+function showList(flag)
+{
+	    console.log(list.length);
+		for(var i=0;i<list.length;i++)
+		{
+		if(flag==2&& list[i].check==false)
+			{
+				console.log("2");
+			continue;
+		    }
+		if(flag==3 && list[i].check==true)
+			continue;
+		
+		var li= document.createElement("li");
+		var text= document.createTextNode(list[i].task);
+		var span= document.createElement("span");
+		var checkbox= document.createElement("input");
+		    checkbox.setAttribute("type","checkbox");
+		    //console.log(list[i].check);
+            var task=list[i];
+		    checkbox.addEventListener("click",function(){
+			onCheckBoxClick(task);
+		
+		});
+		    checkbox.checked=list[i].check;
+		    span.appendChild(text);
+		var span1= document.createElement("span");
+            span1.appendChild(checkbox);
+            li.appendChild(span1);
+            li.appendChild(span);
+		document.getElementById("UL").appendChild(li);
+		
+	}
+}
+function removeChild()
+{
+	var parentNode = document.getElementById("UL");
+        while (parentNode.firstChild) 
+        {
+        parentNode.removeChild(parentNode.firstChild);
+        }
+} 
+function showActiveList()
+{
+	show=1;
+	removeChild();
+	showList(3);
+
+}
+function showCompletedList()
+{
+	console.log("completed");
+	show=2;
+	removeChild();
+	showList(2);
+
+}
+function onAllList()
+{
+	show=1;
+	removeChild();
+	list= JSON.parse(localStorage.getItem("array"));
+	if(list==null)
+	{
+		list=[];
+		localStorage.setItem("array",JSON.stringify(list));
+	}
+	else{
+		console.log("From onAllList");
+		showList(1);
+	}
+}
+function addTask()
+{
+	
+	
+		var input = document.getElementById("text").value;
+		if(input=="")
+			alert("Write something");
+		else
+		{
+        var task=new taskObject(input,false);
+		if(show==1)
+		{var li= document.createElement("li");
+		var text= document.createTextNode(input);
+		var span= document.createElement("span");
+		var checkbox= document.createElement("input");
+		checkbox.setAttribute("type","checkbox");
+		checkbox.addEventListener("click",function(){
+
+			onCheckBoxClick(task);
+			//console.log(task.task);
+		});
+		span.appendChild(text);
+		var span1= document.createElement("span");
+        span1.appendChild(checkbox);
+        li.appendChild(span1);
+        li.appendChild(span);
+		document.getElementById("UL").appendChild(li);
+	    }
+        list= JSON.parse(localStorage.getItem("array"));
+        list.push(task);
+        localStorage.removeItem("array");
+        localStorage.setItem("array", JSON.stringify(list));
+        document.getElementById("text").value="";
+		}
+	
+}
+function onCheckBoxClick(task)
+{
+
+	//console.log(task.task);
+    list= JSON.parse(localStorage.getItem("array"));
+	for(var i=0;i<list.length;i++)
+	{
+		if(list[i].task==task.task)
+		{
+		    // console.log(list[i].task+" "+list[i].check);
+			if(list[i].check==false)
+				{list[i].check=true;
+                // console.log("Yes");
+				}
+			else 
+				{
+				list[i].check=false;
+				}
+			localStorage.removeItem("array");
+			localStorage.setItem("array",JSON.stringify(list));
+		}
+	}
+
+}
+
+onAllList();
+
+
+
+</script>
+</html>

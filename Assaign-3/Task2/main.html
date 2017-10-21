@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To do List</title>
+</head>
+<body>
+<input type="text" id="taskName" placeholder="Type Task">
+<br>
+<button onclick="addTask(1)">Add Task</button>
+<ul id="UL">
+	
+</ul>
+</body>
+<script type="text/javascript">
+	
+	var arr=[];
+	var active=[]
+
+
+function addTask(flag)
+{
+
+	if(flag==2)
+	{
+		list=JSON.parse(localStorage.getItem("array"));
+		if(list==null)
+		{
+			localStorage.setItem("array",JSON.stringify(arr));
+		}
+		else
+		{
+			for(var i=0;i<list.length;i++)
+			{
+
+		var li= document.createElement("li");
+		//var inputValue= document.getElementById("taskName").value;
+		var text= document.createTextNode(list[i]);
+		var span= document.createElement("span");
+		var checkbox= document.createElement("input");
+		    checkbox.setAttribute("type","checkbox");
+		    span.appendChild(text);
+		var span1= document.createElement("span");
+            span1.appendChild(checkbox);
+            li.appendChild(span1);
+            li.appendChild(span);
+		//li.appendChild(text);
+		document.getElementById("UL").appendChild(li);
+		
+
+			}
+		}
+
+	}
+	else
+	{
+
+		var li= document.createElement("li");
+		var inputValue= document.getElementById("taskName").value;
+		var text= document.createTextNode(inputValue);
+		if(inputValue=="")
+		{
+			alert("Fill up the field");
+		}
+		else{
+		//li.appendChild(text);
+		var span= document.createElement("span");
+		var checkbox= document.createElement("input");
+		checkbox.setAttribute("type","checkbox");
+		 span.appendChild(text);
+		var span1= document.createElement("span");
+         span1.appendChild(checkbox);
+         li.appendChild(span1);
+         li.appendChild(span);
+		document.getElementById("UL").appendChild(li);
+		
+        list= JSON.parse(localStorage.getItem("array"));
+        arr=list;
+        arr.push(inputValue);
+        localStorage.removeItem("array");
+        localStorage.setItem("array", JSON.stringify(arr));
+        document.getElementById("taskName").value="";
+
+          }
+	}
+
+}
+
+addTask(2);
+</script>
+</html>
