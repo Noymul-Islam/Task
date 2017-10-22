@@ -27,9 +27,18 @@
 
 
 <script type="text/javascript">
+"use strict";
 var list=[];
-var show=1;
-
+var show=0;
+function onLoad()
+{
+	list=JSON.parse(localStorage.getItem("array"));
+	if(list==null)
+	{
+		list=[];
+		localStorage.setItem("array",JSON.stringify(list));
+	}
+}
 function taskObject(string,status)
 {
 	this.task=string;
@@ -38,75 +47,71 @@ function taskObject(string,status)
 }
 function showList(flag)
 {
-	    console.log(list.length);
-		for(var i=0;i<list.length;i++)
+	    removeChild();
+		for(let i=0;i<list.length;i++)
 		{
-		if(flag==2&& list[i].check==false)
-			{
-				console.log("2");
-			continue;
-		    }
-		if(flag==3 && list[i].check==true)
-			continue;
-		
-		var li= document.createElement("li");
-		var text= document.createTextNode(list[i].task);
-		var span= document.createElement("span");
-		var checkbox= document.createElement("input");
-		    checkbox.setAttribute("type","checkbox");
-		    //console.log(list[i].check);
-            var task=list[i];
-		    checkbox.addEventListener("click",function(){
-			onCheckBoxClick(task);
-		
-		});
-		    checkbox.checked=list[i].check;
-		    span.appendChild(text);
-		var span1= document.createElement("span");
-            span1.appendChild(checkbox);
-            li.appendChild(span1);
-            li.appendChild(span);
-		document.getElementById("UL").appendChild(li);
+			if(flag==2&& list[i].check==false)
+	      		continue;
+			    
+			if(flag==3 && list[i].check==true)
+				continue;
+			
+			var li= document.createElement("li");
+			var text= document.createTextNode(list[i].task);
+			var span= document.createElement("span");
+			var button=document.createElement("button");
+			    button.setAttribute("class","glyphicon glyphicon-remove");
+			    button.addEventListener("click",function(){
+			    	onButtonClick(list[i]);
+			    });
+			var span2= document.createElement("span");
+                span2.appendChild(button); 
+			var checkbox= document.createElement("input");
+			    checkbox.setAttribute("type","checkbox");
+			    checkbox.addEventListener("click",function(){
+
+				onCheckBoxClick(list[i]);
+			
+			});
+			    checkbox.checked=list[i].check;
+			    span.appendChild(text);
+			var span1= document.createElement("span");
+	            span1.appendChild(checkbox);
+	            li.appendChild(span1);
+	            li.appendChild(span);
+	            li.appendChild(span2);
+			document.getElementById("UL").appendChild(li);
 		
 	}
 }
 function removeChild()
 {
-	var parentNode = document.getElementById("UL");
-        while (parentNode.firstChild) 
-        {
-        parentNode.removeChild(parentNode.firstChild);
-        }
+	   var parentNode = document.getElementById("UL");
+       while (parentNode.firstChild) 
+      {
+           parentNode.removeChild(parentNode.firstChild);
+      }
 } 
 function showActiveList()
 {
-	show=1;
-	removeChild();
-	showList(3);
+	      show=3;
+	//removeChild();
+	      showList(3);
 
 }
 function showCompletedList()
 {
-	console.log("completed");
-	show=2;
-	removeChild();
-	showList(2);
+	      console.log("completed");
+	      show=2;
+	//removeChild();
+	      showList(2);
 
 }
 function onAllList()
 {
-	show=1;
-	removeChild();
-	list= JSON.parse(localStorage.getItem("array"));
-	if(list==null)
-	{
-		list=[];
-		localStorage.setItem("array",JSON.stringify(list));
-	}
-	else{
-		console.log("From onAllList");
-		showList(1);
-	}
+	       show=1;
+	       showList(1);
+	
 }
 function addTask()
 {
@@ -118,58 +123,91 @@ function addTask()
 		else
 		{
         var task=new taskObject(input,false);
-		if(show==1)
-		{var li= document.createElement("li");
-		var text= document.createTextNode(input);
-		var span= document.createElement("span");
-		var checkbox= document.createElement("input");
-		checkbox.setAttribute("type","checkbox");
-		checkbox.addEventListener("click",function(){
+		if(show==1 || show==3)
+		{
+			var li= document.createElement("li");
+			var text= document.createTextNode(input);
+			var span= document.createElement("span");
+			var checkbox= document.createElement("input");
+			    checkbox.setAttribute("type","checkbox");
+			    checkbox.addEventListener("click",function(){
 
-			onCheckBoxClick(task);
-			//console.log(task.task);
-		});
-		span.appendChild(text);
-		var span1= document.createElement("span");
-        span1.appendChild(checkbox);
-        li.appendChild(span1);
-        li.appendChild(span);
-		document.getElementById("UL").appendChild(li);
+			    onCheckBoxClick(task);
+		},);
+			var button=document.createElement("button");
+			    button.setAttribute("class","glyphicon glyphicon-remove");
+			    button.addEventListener("click",function(){
+			    	onButtonClick(task);
+			    });
+		        span.appendChild(text);
+		    var span1= document.createElement("span");
+                span1.appendChild(checkbox);
+            var span2= document.createElement("span");
+                span2.appendChild(button); 
+                li.appendChild(span1);
+                li.appendChild(span);
+                li.appendChild(span2);
+
+		        document.getElementById("UL").appendChild(li);
 	    }
-        list= JSON.parse(localStorage.getItem("array"));
-        list.push(task);
-        localStorage.removeItem("array");
-        localStorage.setItem("array", JSON.stringify(list));
-        document.getElementById("text").value="";
+                list= JSON.parse(localStorage.getItem("array"));
+                list.push(task);
+                localStorage.removeItem("array");
+                localStorage.setItem("array", JSON.stringify(list));
+                document.getElementById("text").value="";
 		}
 	
 }
-function onCheckBoxClick(task)
+function onButtonClick(taskObject)
 {
-
-	//console.log(task.task);
-    list= JSON.parse(localStorage.getItem("array"));
-	for(var i=0;i<list.length;i++)
+	list= JSON.parse(localStorage.getItem("array"));
+    for(let i=0;i<list.length;i++)
 	{
-		if(list[i].task==task.task)
+		if(list[i].task===taskObject.task)
 		{
-		    // console.log(list[i].task+" "+list[i].check);
-			if(list[i].check==false)
-				{list[i].check=true;
-                // console.log("Yes");
-				}
-			else 
-				{
-				list[i].check=false;
-				}
+		    list.splice(i,1);
+				
 			localStorage.removeItem("array");
 			localStorage.setItem("array",JSON.stringify(list));
+			if(show==1)
+				showList(1);
+			else if(show==2)
+				showList(2);
+			else
+				showList(3);
+		}
+	}
+}
+function onCheckBoxClick(taskObject)
+{
+
+
+    list= JSON.parse(localStorage.getItem("array"));
+	for(let i=0;i<list.length;i++)
+	{
+		if(list[i].task===taskObject.task)
+		{
+		  
+			if(list[i].check==false)
+				list[i].check=true;
+         
+			else 
+				list[i].check=false;
+				
+			localStorage.removeItem("array");
+			localStorage.setItem("array",JSON.stringify(list));
+			if(show==1)
+				showList(1);
+			else if(show==2)
+				showList(2);
+			else
+				showList(3);
 		}
 	}
 
 }
+onLoad();
 
-onAllList();
 
 
 
