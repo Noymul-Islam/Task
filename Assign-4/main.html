@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pagination</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<div class="container">
+<input type="text" id="taskName" placeholder="Add task...">
+<input type="text" id="mentorName" placeholder="Mentor Name...">
+<input type="date" id="deadLine" placeholder="DeadLine...">
+<br>
+
+<button id="addButton" class="btn" onclick="addTaskInfo()">Add To List</button>
+  <table class="table">
+  	<thead>
+  		<tr>
+  			<td>Task</td>
+  			<td>Mentor</td>
+  			<td>DeadLine</td>
+  		</tr>
+  	</thead>
+  	<tbody id="tbody">
+  		
+  	</tbody>
+
+  	
+  </table>                  
+  <ul class="pagination">
+
+  </ul>	
+
+</div>
+
+
+</body>
+<script type="text/javascript">
+	var list=[];
+    var startingPos=0;
+    var pageAmount=0; 
+    function taskObject(task,mentor,deadLine)
+	{
+		this.task=task;
+		this.mentor= mentor;
+		this.deadLine=deadLine;
+
+	}
+	/*here flag 0 means call for initialization and 1 means call for update*/
+	function initUpdatePagination(flag)
+	{
+		console.log("Hello");
+		if(!flag)
+		{
+			pageAmount=Math.ceil(list.length/5);
+		}
+		if(flag)
+		{
+		   var li= document.createElement('li');
+		   var a= document.createElement('a');
+		   var linkText=document.createTextNode(""+(pageAmount));
+		   a.appendChild(linkText);
+		   a.href="javascript:pageNumberClick(pageAmount)";
+		   li.appendChild(a);
+		   document.getElementsByClassName("pagination")[0].appendChild(li);
+		   return;
+		}
+		for(let i=0;i<pageAmount;i++)
+		{
+
+			var li= document.createElement('li');
+			var a= document.createElement('a');
+			var linkText=document.createTextNode(""+(i+1));
+			a.appendChild(linkText);
+			a.href="javascript:pageNumberClick("+i+1+")";
+			li.appendChild(a);
+			document.getElementsByClassName("pagination")[0].appendChild(li);
+		}
+
+
+	}
+	function pageNumberClick(param)
+	{
+		console.log(param);
+		startingPos=(param-1)*5;
+		//console.log(startingPos);
+		showTaskList(startingPos);
+	}
+	function removeTableItem()
+	{
+		var parentNode = document.getElementById("tbody");
+		//console.log(parentNode);
+        while (parentNode.firstChild) 
+         {
+           parentNode.removeChild(parentNode.firstChild);
+         }
+	}
+	function showTaskList(pos)
+	{
+		var substract=0;
+		list= JSON.parse(localStorage.getItem("list"));
+        if( Math.ceil(list.length/5)>pageAmount)
+        {
+        	pageAmount++;
+        	initUpdatePagination(1);
+        }
+		removeTableItem();
+		if(pos>=5)
+            substract=5;
+		for(let i=pos; i<pos+5;i++)
+		{
+			if(list[i]!=undefined)
+			{
+		       var tbody = document.getElementById("tbody");
+               var row   = tbody.insertRow(i-substract);
+               var cell1 = row.insertCell(0);
+               var cell2 = row.insertCell(1);
+               var cell3 = row.insertCell(2);
+               cell1.innerHTML = list[i].task;
+               cell2.innerHTML = list[i].mentor;
+               cell3.innerHTML=  list[i].deadLine;
+           }
+
+       }
+
+
+   }
+
+	/* on page refrresh or load*/
+	function onLoad()
+	{
+
+		list= JSON.parse(localStorage.getItem("list"));
+		if(list==null|| list.length==0)
+		{
+			list=[];
+			//localStorage.removeItem("list");
+			localStorage.setItem("list",JSON.stringify(list));
+		}
+		else 
+		{
+			initUpdatePagination(0);
+			showTaskList(startingPos);
+		}
+
+
+	}
+	function addTaskInfo()
+	{
+		list= JSON.parse(localStorage.getItem("list"));
+		var taskInput= document.getElementById("taskName").value; // input from task field
+		var mentorName= document.getElementById("mentorName").value; // input from mentor field
+		var deadLineTime= document.getElementById("deadLine").value;// input from date field
+		document.getElementById("taskName").value="";
+		document.getElementById("mentorName").value="";
+		document.getElementById("deadLine").value="";
+		if(taskInput==""||mentorName==""||deadLineTime=="")
+		{
+			alert("No Field should be empty");
+		}
+		else 
+		{
+		    var taskDetails= new taskObject(taskInput,mentorName,deadLineTime);
+		    list.push(taskDetails);
+		    //console.log(list);
+		    localStorage.removeItem("list");
+		    localStorage.setItem("list",JSON.stringify(list));
+		    showTaskList(startingPos);
+        }
+	}
+
+
+	onLoad();
+	
+</script>
+
+
+
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
