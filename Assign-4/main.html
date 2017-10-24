@@ -60,8 +60,11 @@
 		   var li= document.createElement('li');
 		   var a= document.createElement('a');
 		   var linkText=document.createTextNode(""+(pageAmount));
+		   var pageNo=pageAmount;
 		   a.appendChild(linkText);
-		   a.href="javascript:pageNumberClick(pageAmount)";
+		   a.addEventListener("click",function(){
+			    	pageNumberClick(pageNo);
+			    });
 		   li.appendChild(a);
 		   document.getElementsByClassName("pagination")[0].appendChild(li);
 		   return;
@@ -73,7 +76,9 @@
 			var a= document.createElement('a');
 			var linkText=document.createTextNode(""+(i+1));
 			a.appendChild(linkText);
-			a.href="javascript:pageNumberClick("+i+1+")";
+		    a.addEventListener("click",function(){
+			    	pageNumberClick(i+1);
+			    });
 			li.appendChild(a);
 			document.getElementsByClassName("pagination")[0].appendChild(li);
 		}
@@ -82,9 +87,9 @@
 	}
 	function pageNumberClick(param)
 	{
-		console.log(param);
+		alert(param);
 		startingPos=(param-1)*5;
-		//console.log(startingPos);
+		console.log(startingPos);
 		showTaskList(startingPos);
 	}
 	function removeTableItem()
@@ -113,7 +118,7 @@
 			if(list[i]!=undefined)
 			{
 		       var tbody = document.getElementById("tbody");
-               var row   = tbody.insertRow(i-substract);
+               var row   = tbody.insertRow(i-pos);
                var cell1 = row.insertCell(0);
                var cell2 = row.insertCell(1);
                var cell3 = row.insertCell(2);
