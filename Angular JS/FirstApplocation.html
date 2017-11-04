@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="mainApp"  ng-controller="studentController">
+	Enter first name: <input type="text" ng-model="student.firstName"><br>
+	Enter LastName :<input type="text"   ng-model="student.lastName"><br>
+    <br>
+    Your entering: {{student.fullName()}}
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<p> Expense for the book is: {{cost*quantity}}</p>
+
+-->
+
+
+
+
+
+<!--
+<p> Enter your name: <input type="text" ng-model="name"></p>
+<p>Hello <span ng-bind="name"></span></p>
+<p> List of countries with locale:</p>
+<ol>
+	<li ng-repeat="country in countries">
+		{{'Country:'+country.name +',Locale:'+country.locale}}
+		
+
+	</li>
+		
+</ol>
+
+-->
+
+
+
+
+
+
+
+<!--	 <p> Enter your name: <input type="text" ng-model="name"></p>
+	<p> Hello <span ng-bind="name"></span></p>
+-->
+
+
+
+
+
+
+</div>
+
+
+</body>
+<script type="text/javascript">
+	var mainApp= angular.module("mainApp",[]);
+	mainApp.controller('studentController',function($scope){
+      $scope.student={
+       firstName:"mahesh",
+       lastName:"Parash",
+       fullName: function(){
+       	var studentObject;
+       	studentObject= $scope.student;
+       	return studentObject.firstName+ " "+ studentObject.lastName;
+       }
+      };
+
+
+	});
+
+
+
+</script>
+</html>

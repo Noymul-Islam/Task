@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Angular JS Includes</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+      
+      <style>
+         table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+         }
+         
+         table tr:nth-child(odd) {
+            background-color: #f2f2f2;
+         }
+         
+         table tr:nth-child(even) {
+            background-color: #ffffff;
+         }
+      </style>
+      
+</head>
+<body>
+
+	<h2> Angular Js simple Applicltion</h2>
+
+	<div ng-app="mainApp" ng-controller="studentController">
+		<div ng-include ="'C:\Users\noymul.islam.SELISE\Desktop\Task\Task\Angular JS\main.htm'"></div>
+		<div ng-include ="'C:\Users\noymul.islam.SELISE\Desktop\Task\Task\Angular JS\subjects.htm'"></div>
+
+		
+	</div>
+
+<script type="text/javascript">
+	
+ var mainApp= angular.module("studentController",[]);
+     mainApp.controller("studentController",function($scope){
+
+     $scope.student={
+         firstName:"Shorot",
+         lastname:"Noymul",
+         fees:500,
+         subjects:[
+            {name:'Physics', marks:70},
+            {name:'Chemistry', marks:80},
+            {name:'English', marks:75}
+ 
+
+         ],
+         fullName: function(){
+            var studentObject;
+            studentObject= $scope.student;
+            return studentObject.firstName+ " "+ studentObject.lastName;
+
+
+         }  
+
+     };
+
+     });
+
+
+</script>
+
+
+</body>
+</html>
