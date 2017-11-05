@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crude Operatrion</title>
+	  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+</head>
+<body>
+	<div ng-app="mainApp">
+		<input type="text"  id="taskName" placeholder="Add Task">
+		<button ng-click></button>
+		<div ng-controller="mainController">
+			<div style="text-align: center;">
+			<span style="padding-left: 10px;"><a href="#allTask">All Task</a></span> 
+			<span style="padding-left: 10px;" ><a href="#completedTask">CompletedTask</a></span>
+			<span style="padding-left: 10px;"><a href="#activeTask">Active Task</a></span>
+			</div>
+
+		</div>
+		
+
+	</div>
+
+</body>
+</html>
