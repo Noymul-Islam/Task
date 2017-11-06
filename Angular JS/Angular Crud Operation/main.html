@@ -4,22 +4,160 @@
 	<title>Crude Operatrion</title>
 	  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
       <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+
 </head>
 <body>
-	<div ng-app="mainApp">
-		<input type="text"  id="taskName" placeholder="Add Task">
-		<button ng-click></button>
-		<div ng-controller="mainController">
+	<div ng-app="mainApp"  ng-controller="mainController">
+		<div style="text-align: center;">
+		<input type="text"  id="taskName" placeholder="Enter task here...">
+		<button ng-click="add()">Add task</button>
+		</div>
+		<br>
 			<div style="text-align: center;">
 			<span style="padding-left: 10px;"><a href="#allTask">All Task</a></span> 
 			<span style="padding-left: 10px;" ><a href="#completedTask">CompletedTask</a></span>
 			<span style="padding-left: 10px;"><a href="#activeTask">Active Task</a></span>
 			</div>
+			<div ng-view>
+				<script type="text/ng-template" id=allTask.htm>
+					<ul style="text-align: center; list-style-type: none;">
+						<li ng-repeat="task in all" >
 
-		</div>
+							<span><input type="checkbox" ng-checked={{task.check}} ng-click= checkBoxClick(task.taskName,task.check)></span>
+                            <span>{{task.taskName}}</span>
+
+						</li>
+					</ul>
+
+				</script>
+				<script type="text/ng-template" id=completedTask.htm>
+					<ul style="text-align: center; list-style-type: none;">
+						<li ng-repeat="task in complete" style="text-align: center;">
+
+							<span><input type="checkbox" ng-checked={{task.check}} ng-click= checkBoxClick(task.taskName,task.check)></span>
+                            <span>{{task.taskName}}</span>
+
+						</li>
+
+
+					</ul>
+
+
+				</script>
+				<script type="text/ng-template" id=activeTask.htm>
+					<ul style="text-align: center; list-style-type: none;">
+						<li ng-repeat="task in active" style="text-align: center;">
+
+							<span><input type="checkbox" ng-checked={{task.check}} ng-click= checkBoxClick(task.taskName,task.check)></span>
+                            <span>{{task.taskName}}</span>
+
+						</li>
+
+
+					</ul>
+
+
+				</script>
+
+			</div>
+
+		
 		
 
 	</div>
 
 </body>
+
+
+
+<script type="text/javascript">
+
+	var app = angular.module("mainApp",['ngRoute']);
+	app.controller("mainController",function($scope){	
+    $scope.all=[];
+    $scope.active=[];
+    $scope.complete=[];
+    $scope.show=0;
+    $scope.Task= function(name,value)
+    {
+    
+    	this.taskName=name;
+    	this.check   = value;
+    }
+
+ $scope.checkBoxClick= function(taskName,clickFlag)
+ {
+ 	 for(let i=0;i<$scope.all.length;i++)
+ 	 {
+ 	 	if($scope.all[i].taskName===taskName)
+ 	 	{
+ 	 		if(clickFlag)
+ 	 			$scope.all[i].check=false;
+ 	 		else 
+ 	 			$scope.all[i].check= true;
+ 	 	}
+ 	 }
+ 	
+
+ }
+
+  $scope.add= function()
+  {
+  	var taskName= document.getElementById("taskName").value;
+  	document.getElementById("taskName").value="";
+  	var taskObject = new $scope.Task(taskName,false);
+  	   $scope.all.push(taskObject);
+  	   $scope.active.push(taskObject);
+  	   
+ }
+
+
+	});
+
+   app.config(['$routeProvider', function($routeProvider){
+   $routeProvider.
+   when('/allTask',{
+   	templateUrl : "allTask.htm",
+   	controller  : "allTaskController"
+   }).
+   when('/completedTask',{
+   	templateUrl : "completedTask.htm",
+   	controller  : "completedTaskController"
+   }).
+   when('/activeTask',{
+   	templateUrl : "activeTask.htm",
+   	controller  : "activeTaskController"
+   })
+
+   }]);
+
+   app.controller('allTaskController',function($scope){
+   	$scope.show=1;
+   
+
+   });
+   app.controller('completedTaskController',function($scope){
+    $scope.show=2;
+    $scope.complete=[];
+    for(let i=0;i<$scope.all.length;i++)
+    {
+    	if($scope.all[i].check===true)
+    		$scope.complete.push($scope.all[i]);
+    }
+
+
+   });
+   app.controller('activeTaskController', function($scope){
+    $scope.show=3;
+    $scope.active=[];
+    console.log($scope.all.length);
+    for(let i=0;i<$scope.all.length;i++)
+    {
+    	if($scope.all[i].check===false)
+    		$scope.active.push($scope.all[i]);
+    }
+   });
+
+
+</script>
 </html>
