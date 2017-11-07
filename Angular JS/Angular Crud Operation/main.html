@@ -77,7 +77,6 @@
     $scope.all=[];
     $scope.active=[];
     $scope.complete=[];
-    $scope.show=0;
     $scope.Task= function(name,value)
     {
     
@@ -85,10 +84,10 @@
     	this.check   = value;
     }
 
- $scope.checkBoxClick= function(taskName,clickFlag)
- {
- 	 for(let i=0;i<$scope.all.length;i++)
- 	 {
+    $scope.checkBoxClick= function(taskName,clickFlag)
+    {
+ 	  for(let i=0;i<$scope.all.length;i++)
+ 	  {
  	 	if($scope.all[i].taskName===taskName)
  	 	{
  	 		if(clickFlag)
@@ -96,35 +95,36 @@
  	 		else 
  	 			$scope.all[i].check= true;
  	 	}
- 	 }
+ 	  } 
  	
 
- }
+   }
 
-  $scope.add= function()
-  {
-  	var taskName= document.getElementById("taskName").value;
-  	document.getElementById("taskName").value="";
-  	var taskObject = new $scope.Task(taskName,false);
+   $scope.add= function()
+   {
+  	 var taskName= document.getElementById("taskName").value;
+  	 document.getElementById("taskName").value="";
+  	 var taskObject = new $scope.Task(taskName,false);
   	   $scope.all.push(taskObject);
   	   $scope.active.push(taskObject);
+  	   console.log("In add function" +$scope.active.length);
   	   
- }
+   }
 
 
 	});
 
-   app.config(['$routeProvider', function($routeProvider){
-   $routeProvider.
-   when('/allTask',{
-   	templateUrl : "allTask.htm",
-   	controller  : "allTaskController"
-   }).
-   when('/completedTask',{
+    app.config(['$routeProvider', function($routeProvider){
+    $routeProvider.
+    when('/allTask',{
+   	 templateUrl : "allTask.htm",
+   	 controller  : "allTaskController"
+    }).
+    when('/completedTask',{
    	templateUrl : "completedTask.htm",
    	controller  : "completedTaskController"
    }).
-   when('/activeTask',{
+    when('/activeTask',{
    	templateUrl : "activeTask.htm",
    	controller  : "activeTaskController"
    })
@@ -132,12 +132,10 @@
    }]);
 
    app.controller('allTaskController',function($scope){
-   	$scope.show=1;
    
 
    });
    app.controller('completedTaskController',function($scope){
-    $scope.show=2;
     $scope.complete=[];
     for(let i=0;i<$scope.all.length;i++)
     {
@@ -147,14 +145,12 @@
 
 
    });
-   app.controller('activeTaskController', function($scope){
-    $scope.show=3;
-    $scope.active=[];
-    console.log($scope.all.length);
-    for(let i=0;i<$scope.all.length;i++)
+    app.controller('activeTaskController', function($scope){
+    $scope.$parent.active=[];
+    for(let i=0;i<$scope.$parent.all.length;i++)
     {
-    	if($scope.all[i].check===false)
-    		$scope.active.push($scope.all[i]);
+    	if($scope.$parent.all[i].check===false)
+    		$scope.$parent.active.push($scope.$parent.all[i]);
     }
    });
 
